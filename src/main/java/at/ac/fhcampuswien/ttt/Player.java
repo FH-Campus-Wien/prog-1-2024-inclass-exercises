@@ -12,6 +12,10 @@ public class Player {
         this.symbol = symbol;
     }
 
+    public String toString() {
+        return this.name + " " + this.symbol;
+    }
+
     public String getName() {
         return name;
     }
@@ -21,6 +25,7 @@ public class Player {
     }
 
     public void makeMove(TicTacToe game, Scanner scanner) {
-        ;
+        System.out.printf("makeMove %s ", this);
+        scanner.nextInt();
     }
 }
