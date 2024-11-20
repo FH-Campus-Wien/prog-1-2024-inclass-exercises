@@ -8,6 +8,14 @@ public class SportsCar extends Car
         speed+=15;
     }
 
+    public int accelerate(int limit) {
+        this.accelerate();
+        if(this.speed > limit+5) {
+            this.speed = limit + 5;
+        }
+        return this.speed;
+    }
+
     public SportsCar(int speed) {
         super(speed);
     }

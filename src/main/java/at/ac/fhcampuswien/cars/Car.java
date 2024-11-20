@@ -10,6 +10,14 @@ public class Car
             speed+=5;
         }
 
+        public int accelerate(int limit) {
+            this.accelerate();
+            if(this.speed>limit) {
+                this.speed = limit;
+            }
+            return this.speed;
+        }
+
         public Wheel[] getWheels() {
             return new Wheel[]{frontWheels[0], frontWheels[1],
                 backWheels[0], backWheels[1]};

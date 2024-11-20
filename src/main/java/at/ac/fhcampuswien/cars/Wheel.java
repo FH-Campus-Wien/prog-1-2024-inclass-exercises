@@ -8,7 +8,7 @@ public class Wheel {
         return pressure;
     }
 
-    public int setPressure(int pressure) {
+    public void setPressure(int pressure) {
         this.pressure=pressure;
     }
 

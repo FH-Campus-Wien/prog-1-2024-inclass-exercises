@@ -14,8 +14,29 @@ public class Person {
         this.birthday = birthday;
     }
 
+    public boolean equals(Object o) {
+        if(o==null) {
+            return false;
+        }
+
+        if (this == o) {
+            return true;
+        }
+        if (! (o instanceof Person)) {
+            return false;
+        }
+
+        Person other= (Person) o;
+        return this.name.equals(other.name) && this.birthday.equals(other.birthday);
+    }
+
     public Person (String name) {
         this(name, null);
+    }
+
+    public Person( Person other) {
+        this.name = other.name;
+        this.birthday = new SimpleDate(other.birthday);
     }
 
     public void youthen(int years) {

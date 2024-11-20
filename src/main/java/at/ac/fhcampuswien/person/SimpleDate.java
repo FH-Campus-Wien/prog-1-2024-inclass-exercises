@@ -6,10 +6,30 @@ public class SimpleDate {
     private int month;
     private int day;
 
+    public boolean equals(Object o) {
+        if( this == o) {
+            return true;
+        }
+        if( !(o instanceof SimpleDate)) {
+            return false;
+        }
+        SimpleDate other = (SimpleDate) o;
+        if (year == other.year && month == other.month && day == other.day)
+            return true;
+
+        else return false;
+    }
+
     public SimpleDate(int day, int month, int year) {
         this.year = year;
         this.month = month;
         this.day = day;
+    }
+
+    public SimpleDate(SimpleDate simpleDate) {
+        this.year = simpleDate.year;
+        this.month = simpleDate.month;
+        this.day = simpleDate.day;
     }
 
     public String toString() {
