@@ -27,7 +27,7 @@ public TicTacToe(Player p1, Player p2) {
 public void playGame()
 {
     Scanner sc=new Scanner(System.in);
-    this.prettyPrintGameBoard(); // added
+    this.prettyPrintGameBoard();
     do {
         p1.makeMove(this,sc);
         this.prettyPrintGameBoard();
@@ -35,18 +35,47 @@ public void playGame()
             p2.makeMove(this, sc);
             this.prettyPrintGameBoard();
         }
+    } while(spielIstOffen());
+
+    Player winner= winner();
+    System.out.printf(winner==null?
+            "Nobody wins!":
+            winner.getName()+ " has won the game!"
+    );
+}
+
+private Player winner() {
+    if (checkIfWon(p1)) {
+        return p1;
+    } else if (checkIfWon(p2)) {
+        return p2;
+    } else {
+        return null;
     }
-    while(spielIstOffen());
 }
 
 private boolean spielIstOffen() {
-    System.out.println("spielIstOffen");
+    return (!spielFeldVoll() && winner() == null);
+}
+
+private boolean spielFeldVoll() {
+    for(int i=0; i<ROWS; i++) {
+        for(int j=0; j<COLS; j++) {
+            if(!belegt(i,j)) {
+                return false;
+            }
+        }
+    }
     return true;
 }
 
 public boolean placeTic(Player p, int row, int col) {
-    System.out.printf("placeTic %p %d %d %n", p, row, col);
-    return true;
+    if (!belegt(row,col)){
+        gameBoard[row][col]=p.getSymbol();
+        return true;
+    } else {
+        return false;
+    }
 }
 
 public void prettyPrintGameBoard() // implemented
@@ -69,8 +98,8 @@ private boolean belegt(int i, int j) {
     return gameBoard[i][j]!=0;
 }
 
-private char symbol(int i, int j){
-    return gameBoard[i][j];
+private String symbol(int i, int j){
+    return String.valueOf(gameBoard[i][j]);
 }
 
 private int position(int i, int j) {
@@ -84,9 +113,58 @@ private boolean letzteZeile(int i) {
         return i == ROWS-1;
 }
 
-public boolean checkIfWon(Player p) {
-    System.out.printf("checkIfWon %p %n",p);
-    return false;
+public boolean checkIfWon(Player p)
+{
+    for (int i = 0; i < ROWS; i++) {
+        if (rowFilledWith(i,p.getSymbol())) {
+            return true;
+        }
+    }
+    for (int i = 0; i < COLS; i++) {
+        if (columnFilledWith(i,p.getSymbol())) {
+            return true;
+        }
+    }
+    return (diagonale1FilledWith(p.getSymbol()) || diagonale2FilledWith(p.getSymbol()));
+}
+
+private boolean rowFilledWith(int row ,char symbol) {
+    for (int i = 0; i < COLS; i++) {
+        if (gameBoard[row][i] != symbol) {
+            return false;
+        }
+    }
+    return true;
+}
+private boolean columnFilledWith(int column ,char symbol) {
+    for (int i = 0; i < ROWS; i++) {
+        if (gameBoard[i][column] != symbol) {
+            return false;
+        }
+    }
+    return true;
+}
+
+private boolean diagonale1FilledWith(char symbol) {
+    for (int i = 0; i < ROWS; i++) {
+        for (int j = 0; j < COLS; j++) {
+            if (gameBoard[i][j] != symbol) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+private boolean diagonale2FilledWith(char symbol) {
+        for(int i = 0; i< ROWS; i++) {
+            for(int j=0; j<COLS; j++) {
+                if (gameBoard[i][COLS-j-1] != symbol) {
+                    return false;
+                }
+            }
+        }
+    return true;
 }
 
 }
